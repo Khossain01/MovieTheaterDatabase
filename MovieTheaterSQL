@@ -1,0 +1,422 @@
+--Updated the Database, here is the final version. I will reupload this for both the Create Tables and Queries.
+/*MovieTheater Database:
+Names: Bradley Furlow, Luke Faria,
+Joshua Nichols, Khadeejah Hossain
+*/
+use master
+GO
+drop database MovieTheater
+GO
+Create database MovieTheater
+GO
+Use MovieTheater
+GO
+--Person Table: Completed by Brad Furlow
+Create table Person(
+    PersonID int Not Null,
+    FirstName char(15) Not Null,
+    LastName char(15) Not Null,
+    Address char(20) Not Null,
+    City char(25) Not Null,
+    State char(15) Not Null,
+    Zip Char(10) Not Null,
+    Email varchar(30) Not Null,
+    PhoneNumber char(15) Not Null,
+    PersonType char(3) Not Null,
+    Constraint person_PersonID_pk primary key(PersonID),
+    Constraint PersonType_Person_ck check (PersonType in ('EMP', 'MEM'))
+);
+GO
+Insert into Person
+    (PersonID, FirstName, LastName, Address, City, State, Zip, Email, PhoneNumber, PersonType)
+Values  --Created by Khadeejah Hossain    
+    (1001, 'John', 'Jones', '2369 Garfield Rd', 'Rochester', 'MI', '48306', 'jjones@gmail.com','896-659-2263', 'EMP'),
+    (1002, 'Sabrina', 'Jones', '2369 Garfield Rd', 'Rochester', 'MI', '48306', 'sabrinajones@gmail.com','896-659-2263', 'EMP'),
+    (1003, 'Brian', 'Roberts', '123 Elmo Drive', 'Warren', 'MI', '49093', 'broberts@gmail.com', '919-893-4382', 'EMP'),
+    (1004, 'Rain', 'Wittenburg', '515 Outer Drive', 'Sterling Heights', 'MI', '48990', 'rwittenberg@gmail.com','369-862-3659', 'EMP'),
+    (1005, 'Cindy', 'Bill', '222 Donut Ave', 'Saginaw', 'MI', '48663', 'cbilly@gmail.com', '698-555-4869', 'EMP'),
+    (1006, 'Gina', 'wills', '485 Dolker St', 'Warren', 'MI', '48092', 'gwills@gmail.com', '875-889-6929', 'MEM'),
+    (1007, 'Fuji', 'Apple', '5823 Fruity St', 'Sterling Heights', 'MI', '48663', 'fujia@gmail.com', '993-782-1114','MEM'),
+    (1008, 'Hen', 'Shell', '885 Hill Road', 'Rochester','MI', '48663', 'hshell@gmail.com', '563-638-9862', 'MEM'),
+    (1009, 'Dime', 'Amath', '735 Straws Road', 'Sterling Heights', 'MI', '46933', 'damatj@gmail.com', '313-599-2525','MEM'),
+    (1010, 'Jack', 'Smile', '4790 kite St', 'Rochester', 'MI', '49633', 'jsmile@gmail.com','755-961-5633','MEM'),
+    (1011, 'Saima', 'Khan', '333 Trailwood Ln', 'Troy',  'MI', '48099', 'skhan@gmail.com', '734-165-5986', 'EMP'),
+    (1012, 'Zack', 'Clark', '479 Birch Ln', 'Troy',  'MI', '48099', 'z_clark@gmail.com', '784-665-5881', 'EMP'),
+    (1013,'Owen', 'King', '986 Giraffe Rd', 'Saginaw',  'MI', '48663', 'o_king97@gmail.com', '986-996-2864', 'EMP'),
+    (1014, 'Sarah', 'Green', '369 Tiger Ln', 'Troy',  'MI', '48993', 's_green169@gmail.com', '916-155-5856', 'EMP'),
+    (1015, 'Haleem', 'Asad', '840 Sunny Ave', 'Rochester',  'MI', '48306', 'haleem_1a@gmail.com', '716-445-5336', 'EMP'),
+    (1016, 'Mary', 'Poppins', '334 Carpet Dr', 'Troy', 'MI', '45886', 'magic_bag@yahoo.com', '664-991-1885', 'MEM'),
+    (1017, 'Dina', 'Wail', '555 Flower St', 'Saginaw', 'MI', '48601', 'D_wail33@yahoo.com', '313-696-1175', 'MEM'),
+    (1018, 'Alaina', 'Noor', '122 Beech Ave', 'Troy', 'MI', '48007', 'noor_alaina@gmail.com', '698-988-6534', 'MEM'),
+    (1019, 'Tina', 'Ying', '449 Grassland Ln', 'Warren', 'MI', '48092', 'y_tina45@yahoo.com', '694-856-4711','MEM'),
+    (1020, 'Hira', 'Alam', '121 Oatmeal Rd', 'Warren', 'MI', '48093', 'h_alalm5@yahoo.com', '248-866-3383','MEM');
+GO
+--Employee Table: Completed by Luke Faria
+Create table Employee (
+    PersonID int Not Null,
+    HireDate Date Not Null,
+    TerminationDate Date Null,
+    DOB Date Not Null,
+    DriversLicense char(20) Not Null unique,
+    EmployeeDiscount decimal Null,
+   	 constraint PersonID_Employee_pk primary key(PersonID),
+   	 Constraint PersonID_Employee_fk foreign key(PersonID) references Person(PersonID)
+  		  On Update Cascade
+  		  On Delete Cascade,
+);
+GO
+Insert into Employee  -- Created by Khadeejah Hossain
+    (PersonID, HireDate, TerminationDate, DOB, DriversLicense, EmployeeDiscount)
+Values
+    (1001, '2015-04-15', '2016-03-12', '1997-08-17',  'k384895072512', '16.00'),
+    (1002, '2012-03-10', null,      		 '1978-08-16',  'm046947926409', '16.00'),
+    (1003, '2012-01-12', null,       		 '1991-02-02',  't385039457809', '18.00'),
+    (1004, '2016-09-03', '2019-06-08', '1991-03-15',  'L493085028502', '16.00'),
+    (1005, '2013-06-10', null,   		 '1999-09-03', 'H311950285929', '16.00'),
+    (1011, '2014-03-11', null,   		 '1987-04-28', 'K248904972183', '16.00'),
+    (1012, '2014-01-09', '2014-04-28', '1998-07-10', 'D302928595930', '16.00'),
+    (1013, '2021-08-19', null,   		 '2000-10-16', 'R450955330583', NULL),
+    (1014, '2018-12-12', null,   		 '1994-02-05', 'R595803017884', '18.00'),
+    (1015, '2018-12-12', '2020-11-09',  '2001-08-16',  'F675950472904', NULL);   
+GO
+--Member Table: Completed by Brad Furlow
+Create table Member (
+    PersonID int Not Null,
+    MembershipDiscount decimal Null,
+    ExpirationDate date Not Null,
+    Constraint Member_PersonID_pk primary key(PersonID),
+    Constraint Member_PersonID_fk foreign key(PersonID) references Person(PersonID)
+  	  On Update Cascade
+  	  On Delete Cascade,
+);
+GO
+Insert into Member
+    (PersonID, MembershipDiscount, ExpirationDate)
+Values   	-- Created by Khadeejah Hossain
+(1006, 20.00, '2020-11-20'),
+    (1007, 30.00, '2021-12-12'),
+    (1008, 25.00, '2022-09-18'),
+    (1009, 30.00, '2023-08-19'),
+    (1010, 25.00, '2019-12-18'),
+    (1016, 25.00, '2021-12-08'),
+    (1017, 25.00, '2021-05-15'),
+    (1018, 20.00, '2018-11-19'),
+    (1019, 20.00, '2016-08-16'),
+    (1020, 30.00, '2020-10-18');
+GO
+--Coupon Table: Completed by Luke Faria
+Create table Coupon (
+    CouponID int Not Null,
+    CouponType Char(50) Not Null,
+    Description varchar(64) Not Null,
+    DiscountAmount decimal Not Null,
+    ExpirationDate date Not Null,
+    Constraint Coupon_CouponID_pk primary key(CouponID)
+);
+GO
+--Data values for Coupon Table: Created by Khadeejah Hossain
+Insert into Coupon
+    (CouponID, CouponType, Description, DiscountAmount, ExpirationDate)
+Values
+    (1234, 'Member Discount', '$2 off Disney movies for members', 2.00 , '2021-05-31'),
+    (1235, 'Senior Discount', '10% off for 65 and older', 0.60, '2021-09-18'),
+    (1236, 'New Member', 'One-time discount off any movie-new members', 5.50, '2021-12-08'),
+    (1237, 'Under 2 Children', 'Children under 2 watch for free', 5.99, '2025-03-12'),
+    (1238, '50% off', '50% off total order of $100', 2.99, '2020-10-08'),
+    (1239, 'Free Popcorn', 'Free popcorn with a purchase of $75 in movies', 4.00, '2020-05-16'),
+    (1240, 'Family Discount', '15% off for families', 0.89, '2021-05-16'),
+    (1241, 'Membership B-day Gift',  'Free movie during birthday month', 5.99, '2022-12-31'),
+    (1242, 'Movie Discount', '75% off movies over 50 years old', 4.49, '2021-03-18'),
+    (1243, 'Concession Discount', 'Free water', 2.00, '2020-11-16'),
+    (1244, 'BOGO Ticket', 'BOGO free movie ticket full price', 5.99, '2020-08-30');
+GO
+--Orders Table: Completed by Brad Furlow
+Create table Orders (
+    OrderID int Not Null,
+    MemberID int Null,
+    EmployeeID int Not Null,
+    Date date Not Null,
+    CouponID int Null,
+    Constraint Order_OrderID_pk primary key(OrderID),
+    Constraint Order_MemberID_fk foreign key(MemberID) references Person(PersonID)
+  	  On Update Cascade
+  	  On Delete No Action,
+    Constraint Order_EmployeeID_fk foreign key(EmployeeID) references Person(PersonID)
+  	  --On Update Cascade --gives an error for some reason?
+  	  On Delete No Action,  
+    Constraint Order_CouponID_fk foreign key(CouponID) references Coupon(CouponID)
+  	  On Update Cascade
+  	  On Delete No Action,
+);
+GO
+--Data for Orders Table: Created by Khadeejah Hossain
+Insert into Orders
+    (OrderID, MemberID, EmployeeID, Date, CouponID)
+Values
+    (101, 1006, 1003, '2021-04-16', 1234),
+    (102, 1019, 1014, '2021-04-19', 1235),
+    (103, 1014, 1005, '2020-08-29', 1236),
+    (104, 1009, 1013, '2020-06-13', 1237),
+    (105, 1007, 1002, '2020-08-15', 1238),
+    (106, 1008, 1011, '2020-03-13', 1239),
+    (107, 1010, 1003, '2021-06-15', 1240),
+    (108, 1008, 1014, '2021-08-19', 1241),
+    (109, 1009, 1005, '2020-12-02', 1242),
+    (110, 1007, 1002, '2021-12-12', 1243),
+    (111, 1016, 1011, '2020-01-18', 1244),
+    (112, Null, 1003, '2021-01-19', Null),
+    (113, Null, 1011, '2020-02-01', Null);
+GO
+--Room Table: Completed by Luke Faria
+Create table Room (
+   	 RoomID int Not Null,
+   	 NumberOfSeats int Not Null,
+   	 RoomNumber int Not Null,
+   	 Constraint Room_RoomID_pk primary key(RoomID)
+);
+GO
+--Data by Joshua
+Insert into Room
+    (RoomID, NumberOfSeats, RoomNumber)
+Values
+    (101, 30, 1),
+    (102, 30, 2),
+    (103, 30, 3),
+    (104, 30, 4),
+    (105, 30, 5),
+    (106, 30, 6),
+    (107, 30, 7),
+    (108, 30, 8),
+    (109, 30, 9),
+    (110, 30, 10);
+GO
+--Movie Table: Completed by Luke Faria
+Create table Movie (
+   	 MovieID int Not Null,
+   	 MovieName varchar(32) Not Null,
+   	 MovieLength char(16) Not Null, --are we sure char() is appropriate for this field?
+   	 Description char(64) Not Null,
+   	 Price decimal Not Null,
+   	 MovieRating char(6) Not Null,
+   	 Constraint Movie_MovieID_pk primary key(MovieID),
+   	 Constraint Movie_MovieRating_ck check (MovieRating in ('G', 'PG', 'PG-13', 'R'))
+);
+GO
+--Data by Joshua
+Insert into Movie
+    (MovieID, MovieName, MovieLength, Description, Price, MovieRating)
+Values
+    (101, 'Princess and the Frog', '1h38m', 'Princess kisses a Frog romance.', 5.99, 'G'),
+    (102, 'Pacific Rim', '2h12m', 'Robots and Aliens.', 5.99, 'PG-13'),
+    (103, 'Star Wars: The Last Jedi', '2h32m', 'Last Master of the force hopefully.', 5.99, 'PG-13'),
+    (104, 'Kung Fu Panda', '1h35m', 'Panda who learns Kung Fu.', 5.99, 'PG'),
+    (105, 'How to Train Your Dragon', '1h38m', 'Training a dragon.', 5.99, 'PG'),
+    (106, 'Wreck-It Ralph', '1h41m', 'A guy who only wreck stuff.', 5.99, 'PG'),
+    (107, 'Minions', '1h30m', 'Minion doing Minion stuff.', 5.99, 'PG'),
+    (108, 'Snowpiercer', '2h6m', 'A train zooming throught ice/snow.', 5.99, 'R'),
+    (109, 'Frozen', '1h42m', 'Cold Relationships.', 5.99, 'PG'),
+    (110, 'Shrek', '1h35m', 'Ogre looking for love.', 5.99, 'PG');
+GO
+--Movie_Times Table: Completed by Luke Faria
+Create table Movie_Times (
+   	 MovieTimeID int Not Null,
+   	 MovieID int Not Null,
+   	 RoomID int Not Null,
+   	 Date date Not Null,
+   	 StartTime time Not Null,
+   	 EndTime time Not Null,
+   	 Constraint MovieTimes_MovieTimeID_pk primary key(MovieTimeID),
+   	 Constraint MovieTimes_MovieID_fk foreign key(MovieID) references Movie(MovieID)    
+  		  On Update Cascade
+  		  On Delete Cascade,
+   	 Constraint MovieTimes_RoomID_fk foreign key(RoomID) references Room(RoomID)
+  		  On Update Cascade
+  		  On Delete Cascade
+);
+GO
+--Data by Joshua
+Insert into Movie_Times
+    (MovieTimeID, MovieID, RoomID, Date, StartTime, EndTime)
+Values
+    (101, 101, 105, '3/14/2020', '8:30', '10:08'),
+    (102, 106, 109, '4/28/2020', '3:00', '4:41'),
+    (103, 102, 104, '2/08/2020', '6:00', '8:12'),
+    (104, 105, 110, '4/20/2020', '11:00', '12:38'),
+    (105, 109, 106, '5/03/2020', '5:00', '6:42'),
+    (106, 104, 103, '4/14/2020', '10:00', '11:35'),
+    (107, 108, 102, '1/18/2020', '1:00', '3:06'),
+    (108, 110, 107, '5/16/2020', '1:00', '2:35'),
+    (109, 103, 101, '2/26/2020', '4:00', '6:32'),
+    (110, 107, 108, '3/18/2022', '2:00', '3:30');
+GO
+--Ticket Table: Completed by Luke Faria
+Create table Ticket (
+   	 TicketID int Not Null,
+   	 MovieTimeID int Not Null,
+   	 SeatNumber int Not Null,
+   	 Price money Not Null,
+   	 Constraint Ticket_TicketID_pk primary key(TicketID),
+   	 Constraint Ticket_MovieTimeID_fk foreign key(MovieTimeID) references Movie_Times(MovieTimeID)
+  		  On Update Cascade
+  		  On Delete No Action,
+);
+GO
+--Data by Joshua
+Insert into Ticket
+    (TicketID, MovieTimeID, SeatNumber, Price)
+Values
+    (101, 102, 11, 5.99),
+    (102, 105, 22, 5.99),
+    (103, 101, 5, 5.99),
+    (104, 103, 30, 5.99),
+    (105, 104, 25, 5.99),
+    (106, 107, 18, 5.99),
+    (107, 106, 9, 5.99),
+    (108, 110, 7, 5.99),
+    (109, 109, 14, 5.99),
+    (110, 108, 10, 5.99),
+    (111, 106, 10, 5.99),
+    (112, 101, 6, 5.99);
+GO
+--Ticket_Purchase Table: Completed by Luke Faria
+Create table Ticket_Purchase (
+   	 OrderID int Not Null,
+   	 TicketID int Not Null,
+   	 Constraint TicketPurchase_OrderTicket_pk primary key(OrderID,TicketID),
+   	 Constraint TicketPurchase_OrderID_fk foreign key(OrderID) references Orders(OrderID)
+  		  On Update Cascade
+  		  On Delete Cascade,
+   	 Constraint TicketPurchase_TicketID_fk foreign key(TicketID) references Ticket(TicketID)
+  		  On Update Cascade
+  		  On Delete Cascade,
+);
+GO
+--Data by Joshua
+Insert into Ticket_Purchase
+    (OrderID, TicketID)
+Values
+    (101, 104),
+    (102, 109),
+    (103, 103),
+    (104, 106),
+    (105, 101),
+    (106, 105),
+    (107, 110),
+    (108, 102),
+    (109, 108),
+    (110, 107),
+    (111, 111),
+    (112, 112);
+GO
+--Concessions Table: Completed by Luke Faria
+Create table Concessions (
+   	 ConcessionID int Not Null,
+   	 ConcessionName text Not Null,
+   	 ConcessionUnitPrice int Not Null,
+   	 Constraint Concessions_ConcessionID_pk primary key(ConcessionID)
+);
+GO
+--Data by Joshua
+Insert into Concessions
+    (ConcessionID, ConcessionName, ConcessionUnitPrice)
+Values
+    (101, 'Water', 2.00),
+    (102, 'Pretzel', 2.50),
+    (103, 'Chips', 1.99),
+    (104, 'Candy', 1.99),
+    (105, 'Pizza', 4.99),
+    (106, 'Fruit Snacks', 1.99),
+    (107, 'Popcorn', 4.00),
+    (108, 'Nacho Cheese', 3.99),
+    (109, 'Pop', 3.50),
+    (110, 'Jerky', 3.99),
+    (111, 'Cotton Candy', 4.99);
+GO
+--Inventory Table: Completed by Luke Faria
+Create table Inventory (
+   	 ConcessionID int Not Null,
+   	 OnHand int Not Null,
+   	 OrderAmount int Not Null,
+   	 Constraint Inventory_ConcessionID_pk primary key(ConcessionID),
+   	 Constraint Inventory_ConcessionID_fk foreign key(ConcessionID) references Concessions(ConcessionID)
+  		  On Update Cascade
+  		  On Delete Cascade,
+);
+GO
+--Data by Joshua
+Insert into Inventory
+    (ConcessionID, OnHand, OrderAmount)
+Values
+    (101, 20, 95),
+    (102, 15, 50),
+    (103, 30, 75),
+    (104, 100, 10),
+    (105, 5, 25),
+    (106, 40, 85),
+    (107, 0, 100),
+    (108, 55, 40),
+    (109, 60, 25),
+    (110, 15, 50),
+     (111, 3, 12);
+
+GO
+--Concession_Purchase Table: Completed by Luke Faria
+Create table Concession_Purchase(
+    OrderID int Not Null,
+    ConcessionID int Not Null,
+    Quantity int Not Null,
+    Constraint Concession_Purchase_OrderID_pk primary key(OrderID),
+    Constraint Concession_OrderID_fk foreign key(ConcessionID) references Orders(OrderID)
+  	  On Update Cascade
+  	  On Delete Cascade,
+    Constraint Concession_ConcessionID_fk foreign key(ConcessionID) references Concessions(ConcessionID)
+  	  On Update Cascade
+  	  On Delete Cascade,
+);
+GO
+--Data by Joshua
+Insert into Concession_Purchase
+    (OrderID, ConcessionID, Quantity)
+Values
+    (101, 103, 3),
+    (102, 109, 2),
+    (103, 106, 4),
+    (104, 110, 2),
+    (105, 108, 1),
+    (106, 101, 5),
+    (107, 102, 2),
+    (108, 107, 3),
+    (109, 105, 1),
+    (110, 104, 4);
+GO
+--Queries by Brad
+--scenario: a family of four would like to go out on a movie night  and wanted a list of movies that would end before 8 oclock so it wont be to late for there kids, they also wanted to know how much it would cost
+select MovieName, MovieLength, Description, (price*4)*1.06 as 'Total Price', MovieRating
+from Movie_Times join Movie
+on Movie_Times.MovieID = Movie.MovieID
+where EndTime<='8:00'
+order by MovieName;
+
+--scenario: our movie theater wanted to do a promotion where we give out a free movie ticket to any returning members
+select FirstName, LastName, COUNT(MemberID) as 'Number Of Orders'
+from person p left join Orders o
+on p.PersonID = o.MemberID
+group by FirstName, LastName
+having count(memberID)>1
+order by FirstName;
+
+--scenario: were trying to find out which workers have not done any orders yet
+select FirstName, LastName
+from Person
+where personid in (
+    select PersonID
+    from Employee
+    except
+    select EmployeeID
+    from Orders);
+
+--scenerio: a concession worker wants to know what concession snacks need to be reordered for the day. The worker wants to look at the inventory to see snacks greater than  
+ --select ConcessionName, ConcessionUnitPrice
+
+ --where OnHand <= 30
+ --order by  ConcessionUnitPrice;
